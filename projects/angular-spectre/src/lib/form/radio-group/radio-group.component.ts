@@ -4,6 +4,7 @@ import { OptionComponent } from '../select/option/option.component';
 import { FormGroupService } from '../form-group/form-group.service';
 import { ngModelProvider, NgModel, Subscribe } from '../../../utils';
 
+// @dynamic
 @Component({
   selector: 'spectre-radio-group',
   templateUrl: './radio-group.component.html',

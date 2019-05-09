@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import { EmptyIconDirective, EmptyTitleDirective, EmptySubtitleDirective } from './empty.directives';
 import { Subscribe } from '../../../utils';
 
+// @dynamic
 @Component({
   selector: 'spectre-empty',
   templateUrl: './empty.component.html',
