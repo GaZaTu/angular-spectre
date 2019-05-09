@@ -1,0 +1,7 @@
+@import "~spectre.css/src/_variables.scss";
+
+@media (min-width: $size-lg) {
+  .tablemanager-head > * {
+    max-width: 50vw;
+  }
+}

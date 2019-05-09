@@ -1,0 +1,5 @@
+<spectre-columns [gapless]="gaplessColumns">
+  <spectre-column *ngFor="let board of boards; trackBy: trackBoardByFnOrIdx" sm="12" lg="6" xl="4">
+    <ng-container [ngTemplateOutlet]="kanbanBoardTemplate" [ngTemplateOutletContext]="{ $implicit: board }"></ng-container>
+  </spectre-column>
+</spectre-columns>

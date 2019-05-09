@@ -1,0 +1,9 @@
+<div *ngFor="let menu of service.menus.value; let idx = index" [ngStyle]="getMenuStyle(menu, idx, element)" (click)="onMenuClick(menu, $event)" #element>
+  <ng-container *ngIf="menu.template" [ngTemplateOutlet]="menu.template" [ngTemplateOutletContext]="{ $implicit: menu.context, menu: menu, cdr: changeDetectorRef }"></ng-container>
+
+  <spectre-menu *ngIf="menu.links">
+    <spectre-menu-item *ngFor="let link of menu.links">
+      <a [href]="link.href">{{ link.text }}</a>
+    </spectre-menu-item>
+  </spectre-menu>
+</div>

@@ -1,0 +1,16 @@
+<div class="modal-header">
+  <button *ngIf="modal.closable" class="btn btn-clear float-right" (click)="service.close(modal)"></button>
+  <div *ngIf="title" class="modal-title h5">
+    <ng-container [ngTemplateOutlet]="title"></ng-container>
+  </div>
+</div>
+
+<div *ngIf="body" class="modal-body">
+  <div class="content">
+    <ng-container [ngTemplateOutlet]="body"></ng-container>
+  </div>
+</div>
+
+<div *ngIf="footer" class="modal-footer">
+  <ng-container [ngTemplateOutlet]="footer"></ng-container>
+</div>

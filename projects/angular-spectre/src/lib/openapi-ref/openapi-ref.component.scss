@@ -1,0 +1,296 @@
+.openapi-ref {
+  > .title {
+    margin-bottom: unset;
+
+    &.badge:after {
+      padding: 0.1rem 0.3rem;
+      margin-left: 0.2rem;
+    }
+  }
+
+  > .base-url {
+    margin-top: unset;
+    font-size: 0.8em;
+  }
+
+  .accordion.route-group {
+    > .accordion-header {
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+      padding: 10px 20px 10px 10px;
+      cursor: pointer;
+      -webkit-transition: all .2s;
+      transition: all .2s;
+      border-bottom: 1px solid rgba(59, 65, 81, .3);
+      font-size: 24px;
+      margin: 0 0 5px;
+      font-family: sans-serif;
+      color: #3b4151;
+
+      &:hover {
+        background: rgba(0, 0, 0, .02);
+      }
+
+      // > .name { }
+
+      > .description {
+        font-size: 14px;
+        font-weight: 400;
+        -webkit-box-flex: 1;
+        -ms-flex: 1;
+        flex: 1;
+        padding: 0 10px;
+        font-family: sans-serif;
+        color: #3b4151;
+      }
+    }
+  }
+
+  .accordion.route {
+    display: block;
+    border: 1px solid #000;
+    border-radius: 4px;
+    margin-bottom: 0.4rem;
+
+    > .accordion-header {
+      -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, .19);
+      box-shadow: 0 0 3px rgba(0, 0, 0, .19);
+      display: flex;
+      padding: unset;
+
+      > .method {
+        font-size: 14px;
+        font-weight: 700;
+        min-width: 80px;
+        padding: 6px 15px;
+        text-align: center;
+        // border-radius: 3px;
+        background: #000;
+        text-shadow: 0 1px 0 rgba(0,0,0,.1);
+        font-family: sans-serif;
+        color: #fff;
+        min-width: 4.27rem;
+
+        @media (max-width: 960px) {
+          min-width: 3.57rem;
+          font-size: 12px;
+          letter-spacing: -0.05rem;
+        }
+      }
+
+      > .path {
+        font-size: 16px;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        word-break: break-word;
+        padding: 0 10px;
+        font-family: monospace;
+        font-weight: 600;
+        color: #3b4151;
+
+        @media (max-width: 960px) {
+          font-size: 14px;
+          letter-spacing: -0.05rem;
+        }
+      }
+
+      > .summary {
+        font-size: 13px;
+        -webkit-box-flex: 1;
+        -ms-flex: 1 1 auto;
+        flex: 1 1 auto;
+        word-break: break-word;
+        font-family: sans-serif;
+        color: #3b4151;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        padding: 5px;
+        cursor: pointer;
+
+        @media (max-width: 960px) {
+          font-size: 12px;
+          letter-spacing: -0.025rem;
+        }
+      }
+
+      > .security {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        padding: 5px;
+        font-size: 12px;
+
+        > .symbol {
+          margin-right: 0.25rem;
+        }
+
+        > .roles {
+          font-style: italic;
+        }
+      }
+    }
+
+    > .accordion-body {
+      margin-bottom: unset;
+
+      > .route-description {
+        font-size: 12px;
+        margin: 0 0 5px;
+        padding: 15px 20px;
+        font-family: sans-serif;
+        color: #3b4151;
+      }
+
+      table {
+        .parameters-caption,
+        .responses-caption {
+          display: block;
+          text-align: left;
+          font-size: 20px;
+          padding: 8px 20px;
+          min-height: 50px;
+          background: hsla(0, 0%, 100%, .8);
+          -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .1);
+          box-shadow: 0 1px 2px rgba(0, 0, 0, .1);
+        }
+
+        // thead { }
+
+        tbody {
+          .parameter-name {
+            font-size: 16px;
+            font-weight: 400;
+            font-family: sans-serif;
+            color: #3b4151;
+
+            &.required {
+              font-weight: 700;
+
+              &:after {
+                font-size: 10px;
+                position: relative;
+                top: -6px;
+                padding: 5px;
+                content: "* required";
+                color: rgba(255, 0, 0, .6);
+              }
+            }
+          }
+
+          .parameter-type {
+            font-size: 12px;
+            padding: 5px 0;
+            font-family: monospace;
+            font-weight: 600;
+            color: #3b4151;
+          }
+
+          .parameter-deprecated {
+            font-size: 12px;
+            font-style: italic;
+            font-family: monospace;
+            font-weight: 600;
+            color: red;
+          }
+
+          .parameter-in {
+            font-size: 12px;
+            font-style: italic;
+            font-family: monospace;
+            font-weight: 600;
+            color: gray;
+          }
+
+          .parameter-enum {
+            font-style: italic;
+          }
+        }
+      }
+    }
+
+    &.get {
+      border-color: #61affe;
+      background: rgba(97, 175, 254, .1);
+
+      > .accordion-header {
+        > .method {
+          background: #61affe;
+        }
+      }
+    }
+
+    &.post {
+      border-color: #49cc90;
+      background: rgba(73, 204, 144, .1);
+
+      > .accordion-header {
+        > .method {
+          background: #49cc90;
+        }
+      }
+    }
+
+    &.put {
+      border-color: #fca130;
+      background: rgba(252, 161, 48, .1);
+
+      > .accordion-header {
+        > .method {
+          background: #fca130;
+        }
+      }
+    }
+
+    &.delete {
+      border-color: #f93e3e;
+      background: rgba(249, 62, 62, .1);
+
+      > .accordion-header {
+        > .method {
+          background: #f93e3e;
+        }
+      }
+    }
+
+    &.deprecated {
+      opacity: .6;
+      border-color: #c7c7c7;
+      background: hsla(0, 0%, 92%, .1);
+
+      > .accordion-header {
+        > .method {
+          background: #c7c7c7;
+        }
+
+        > .path {
+          text-decoration: line-through;
+        }
+      }
+    }
+  }
+
+  .accordion > input:checked {
+    ~ .accordion-header {
+      border-bottom: 1px solid #00000040;
+    }
+
+    ~ .accordion-body {
+      max-height: unset;
+    }
+  }
+}

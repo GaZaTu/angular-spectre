@@ -1,0 +1,8 @@
+:host.flat {
+  display: block;
+  height: 0;
+
+  > .progress {
+    display: block;
+  }
+}

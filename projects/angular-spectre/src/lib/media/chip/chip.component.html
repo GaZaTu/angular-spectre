@@ -1,0 +1,4 @@
+<img *ngIf="avatarImage" class="avatar avatar-sm" [src]="avatarImage" />
+<figure *ngIf="avatarInitials" class="avatar avatar-sm" [attr.data-initial]="avatarInitials" [ngStyle]="avatarStyle"></figure>
+<ng-content></ng-content>
+<a *ngIf="close.observers.length" className="btn btn-clear" (click)="close.emit($event)"></a>

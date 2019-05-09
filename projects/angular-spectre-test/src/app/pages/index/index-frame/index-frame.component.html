@@ -1,0 +1,476 @@
+<h3 appStickyTitle>Hello World!</h3>
+
+<div>
+  <spectre-button-group>
+    <button spectreButton (click)="toastService.add({ text: 'xddd', longLived: true })">Test1</button>
+    <button spectreButton (click)="toastService.add({ text: 'Hello World!', longLived: true })" spectreBadge>Test2</button>
+    <button spectreButton (click)="handleClick($event)">Test3</button>
+    <button spectreButton (click)="toastService.reactivateToasts()">Reactivate closed toasts</button>
+    <button spectreButton (click)="offcanvasService.forceToggleSidebar()">ToggleSidebar</button>
+  </spectre-button-group>
+</div>
+
+<div>
+  <spectre-button-group>
+    <button spectreButton (click)="handleClick(tryOrToastTest1())">tryOrToastTest1</button>
+    <button spectreButton (click)="handleClick(tryOrToastTest2())">tryOrToastTest2</button>
+    <button spectreButton (click)="handleClick(tryOrToastTest3())">tryOrToastTest3</button>
+    <button spectreButton (click)="handleClick(tryOrToastTest4())">tryOrToastTest4</button>
+    <button spectreButton (click)="handleClick(tryOrToastTest5())">tryOrToastTest5</button>
+    <button spectreButton (click)="handleClick(tryOrToastTest6())">tryOrToastTest6</button>
+  </spectre-button-group>
+</div>
+
+<div>
+  <spectre-avatar initials="DB" presence="busy" spectreTooltip="Dennis Ballmann"></spectre-avatar>
+  <spectre-chip>test</spectre-chip>
+  <spectre-chip avatarInitials="TS">test</spectre-chip>
+  <spectre-chip (close)="handleClick($event)">test</spectre-chip>
+  <spectre-chip avatarInitials="TS" (close)="handleClick($event)">test</spectre-chip>
+  <i spectreIcon="cross"></i>
+  <spectre-label kind="warning">ABC</spectre-label>
+  <spectre-divider text="TEST"></spectre-divider>
+</div>
+
+<div>
+  <spectre-checkbox [(ngModel)]="boolValue">Hello World!</spectre-checkbox>
+  <spectre-checkbox type="switch" [(ngModel)]="boolValue">Hello World!</spectre-checkbox>
+  <spectre-checkbox type="switch" [(ngModel)]="boolValue" [error]="true">Hello World!</spectre-checkbox>
+  <spectre-input type="date" class="unstyled" [(ngModel)]="dateStr" [spectreContextMenu]="tableContextMenu" [contextMenuContext]="{ type: 'date' }"></spectre-input>
+  <spectre-input [(ngModel)]="strValue" [loading]="true" [disabled]="true"></spectre-input>
+  <spectre-input [(ngModel)]="strValue" icon="cross" (iconClick)="handleClick($event)" [spectrePopover]="tableContextMenu" [popoverContext]="{ type: 'date' }"></spectre-input>
+  <spectre-input-group [spectreTooltip]="'First Line\nSecond Line'">
+    <i spectreIcon="cross" (click)="handleClick($event)"></i>
+    <spectre-input [(ngModel)]="strValue"></spectre-input>
+    <span spectreInputGroupAddon>.xlsx</span>
+    <button spectreButton>Test</button>
+  </spectre-input-group>
+  <spectre-select [(ngModel)]="anyValue">
+    <spectre-option [value]="{ 'test': false }">abc</spectre-option>
+    <spectre-option [value]="2">def</spectre-option>
+    <spectre-option [value]="3">ghi</spectre-option>
+  </spectre-select>
+  <spectre-input-group [spectrePopover]="testPopover">
+    <spectre-select [(ngModel)]="anyValue" [disabled]="true">
+      <spectre-option [value]="{ 'test': false }">abc</spectre-option>
+      <spectre-option [value]="2">def</spectre-option>
+      <spectre-option [value]="3">ghi</spectre-option>
+    </spectre-select>
+    <button spectreButton>Test</button>
+  </spectre-input-group>
+  <spectre-radio-group [(ngModel)]="anyValue">
+    <spectre-option [value]="{ 'test': false }">abc</spectre-option>
+    <spectre-option [value]="2">def</spectre-option>
+    <spectre-option [value]="3">ghi</spectre-option>
+  </spectre-radio-group>
+  <spectre-radio-group [(ngModel)]="anyValue" [disabled]="true">
+    <spectre-option [value]="{ 'test': false }">abc</spectre-option>
+    <spectre-option [value]="2">def</spectre-option>
+    <spectre-option [value]="3">ghi</spectre-option>
+  </spectre-radio-group>
+  <spectre-form>
+    <fieldset>
+      <spectre-form-group label="test123">
+        <spectre-input [(ngModel)]="strValue"></spectre-input>
+      </spectre-form-group>
+    </fieldset>
+  </spectre-form>
+  <spectre-columns>
+    <spectre-column xxl="6" sm="12">
+      TEST-COLUMN 1
+    </spectre-column>
+    <spectre-column xxl="3" autoAlign="right">
+      TEST-COLUMN 2
+    </spectre-column>
+  </spectre-columns>
+  <spectre-form [horizontal]="true" [formGroup]="form" (ngSubmit)="handleSubmit($event)" class="col-sm-12 col-md-9 col-6" [size]="formSize">
+    <fieldset>
+      <spectre-form-group label="test123">
+        <spectre-input formControlName="input" [required]="true" pattern="[0-9]+"></spectre-input>
+      </spectre-form-group>
+    </fieldset>
+    <fieldset>
+      <spectre-form-group label="test123">
+        <spectre-input-group>
+          <spectre-select formControlName="select" [required]="true">
+            <spectre-option [value]="null"></spectre-option>
+            <spectre-option [value]="{ 'test': false }">abc</spectre-option>
+            <spectre-option [value]="2">def</spectre-option>
+            <spectre-option [value]="3">ghi</spectre-option>
+          </spectre-select>
+          <button spectreButton (click)="modalService.open({ template: testModal })">Test</button>
+        </spectre-input-group>
+      </spectre-form-group>
+    </fieldset>
+    <fieldset>
+      <spectre-form-group label="autocomplete">
+        <spectre-input-group>
+          <i spectreIcon="cross"></i>
+          <i appFaIcon="coffee"></i>
+          <span spectreInputGroupAddon>test</span>
+          <spectre-autocomplete formControlName="autocomplete" [options]="[{ name: 'Tag1' }, { name: 'Tag2' }, { name: 'Tag3' }]"></spectre-autocomplete>
+          <button spectreButton (click)="modalService.open({ template: testModal })">
+            <i appFaIcon="coffee"></i>
+          </button>
+          <button spectreButton (click)="modalService.open({ template: testModal })">
+            <i spectreIcon="cross"></i>
+          </button>
+        </spectre-input-group>
+      </spectre-form-group>
+    </fieldset>
+    <fieldset>
+      <button spectreButton type="submit">Submit</button>
+    </fieldset>
+  </spectre-form>
+</div>
+
+<div appStickyTitle="subtitle" id="buttons">
+  <spectre-button-group>
+    <button spectreButton>Hello World?</button>
+    <button spectreButton="error">Hello World?</button>
+    <button spectreButton="success">Hello World?</button>
+  </spectre-button-group>
+</div>
+
+<div>
+  <spectre-progress [value]="1" [max]="10"></spectre-progress>
+  <spectre-tabs [(activeTabKey)]="activeTab" (tabClose)="handleCloseTab($event)">
+    <spectre-tab *ngFor="let tab of tabs" [key]="tab.name" [name]="tab.name" [closable]="true">
+      {{ tab.name }}
+    </spectre-tab>
+
+    <ng-template spectreTabsAction>
+      <button spectreButton="link" [spectreContextMenu]="addTabContextMenu" contextMenuEvent="click" contextMenuAnchor="target">
+        <i spectreIcon="plus"></i>
+      </button>
+    </ng-template>
+  </spectre-tabs>
+  <button spectreButton (click)="toast()">Toast</button>
+  <spectre-card [spectreContextMenu]="tableContextMenu" [contextMenuContext]="{ type: 'card' }">
+    <ng-template spectreCardTitle>{{ cardTitle }}</ng-template>
+    <ng-template spectreCardSubtitle>This is just a subtitle...</ng-template>
+  </spectre-card>
+  <spectre-card style="margin-top: 20px; margin-bottom: 20px;">
+    <ng-template spectreCardBody>
+      <spectre-tile [centered]="true" [spectrePopover]="tablePopover" [popoverContext]="[{ name: 'Name1', value: 'Value1' }, { name: 'Name2', value: 'Value2' }]">
+        <ng-template spectreTileIconBox>
+          <i spectreIcon="mail"></i>
+        </ng-template>
+        <ng-template spectreTileTitle>Title</ng-template>
+        <ng-template spectreTileSubtitle>This is some random subtitle</ng-template>
+        <ng-template spectreTileAction>
+          <button spectreButton="link">
+            <i spectreIcon="more-vert"></i>
+          </button>
+        </ng-template>
+      </spectre-tile>
+      <spectre-tile [centered]="true" [spectreContextMenu]="tablePopover" [contextMenuContext]="[{ name: 'Name1', value: 'Value1' }, { name: 'Name2', value: 'Value2' }]">
+        <ng-template spectreTileIconBox>
+          <i appFaIcon="envelope" kind="fal"></i>
+        </ng-template>
+        <ng-template spectreTileTitle>Title</ng-template>
+        <ng-template spectreTileSubtitle>This is some random subtitle</ng-template>
+        <ng-template spectreTileAction>
+          <button spectreButton="link">
+            <i spectreIcon="more-vert"></i>
+          </button>
+        </ng-template>
+      </spectre-tile>
+      <spectre-tile [centered]="true" [spectreContextMenu]="[{ text: 'Link 1', href: '/link1' }, { text: 'Link 2', href: '/link2' }]">
+        <ng-template spectreTileIconBox>
+          <i appFaIcon="envelope-open-text" kind="fal"></i>
+        </ng-template>
+        <ng-template spectreTileTitle>Title</ng-template>
+        <ng-template spectreTileSubtitle>This is some random subtitle</ng-template>
+        <ng-template spectreTileAction>
+          <button spectreButton="link">
+            <i spectreIcon="more-vert"></i>
+          </button>
+        </ng-template>
+      </spectre-tile>
+    </ng-template>
+  </spectre-card>
+</div>
+
+<h4 appStickyTitle="subtitle" id="subtitle">Subtitle</h4>
+
+<div>
+  <spectre-tabs>
+    <spectre-tab key="Table">
+      <spectre-card [withoutPadding]="true">
+        <ng-template spectreCardBody>
+          <spectre-table [data]="tableData" trackByKey="id" [loading]="loading" [pageSize]="3">
+            <ng-template spectreTableCaption>TestTable</ng-template>
+
+            <spectre-table-column preset="expandCol">
+            </spectre-table-column>
+            <spectre-table-column prop="firstName" name="First Name" flex="10" filterKind="input-select">
+            </spectre-table-column>
+            <spectre-table-column prop="lastName" name="Last Name" flex="10" filterKind="multi-select">
+            </spectre-table-column>
+            <spectre-table-column prop="date" name="Date" flex="5" preset="date">
+            </spectre-table-column>
+            <spectre-table-column prop="age" name="Age" flex="5">
+            </spectre-table-column>
+            <spectre-table-column prop="active" name="Active" flex="5" filterKind="select" [lookupData]="[{ key: 'Ja', value: true }, { key: 'Nein', value: false }]">
+            </spectre-table-column>
+
+            <ng-template spectreTableRowDetail let-row>
+              <spectre-table [data]="[{ firstName: 'fname1', lastName: 'lname1', age: 10, active: true }, { firstName: 'fname2', lastName: 'lname2', age: 20, active: false }, { firstName: 'fname3', lastName: 'lname3', age: 20, active: true }]" trackByKey="firstName" [loading]="loading" [nested]="true" style="margin-left: 2rem;">
+                <spectre-table-column prop="firstName" name="First Name" [flex]="2">
+                </spectre-table-column>
+                <spectre-table-column prop="lastName" name="Last Name" [flex]="2">
+                </spectre-table-column>
+                <spectre-table-column prop="age" name="Age" [flex]="1">
+                </spectre-table-column>
+                <spectre-table-column prop="active" name="Active" [flex]="1">
+                </spectre-table-column>
+              </spectre-table>
+            </ng-template>
+
+            <ng-template spectreTableFooter>
+              <spectre-button-group>
+                <button spectreButton>
+                  <i spectreIcon="plus"></i>
+                </button>
+              </spectre-button-group>
+            </ng-template>
+          </spectre-table>
+        </ng-template>
+      </spectre-card>
+      <button spectreButton (click)="toggleTableLoadingState()">toggleTableLoadingState</button>
+    </spectre-tab>
+    <spectre-tab key="Menu">
+      <spectre-menu>
+        <spectre-menu-item>
+          <a href="#">Item1</a>
+        </spectre-menu-item>
+        <spectre-menu-item menuBadgeLabel="123">
+          <a href="#">Item3</a>
+        </spectre-menu-item>
+      </spectre-menu>
+    </spectre-tab>
+  </spectre-tabs>
+</div>
+
+<div>
+  <spectre-kanban [boards]="kanbanBoards" trackBoardByKey="taskStatusId" (itemMove)="onKanbanItemMove($event)" [gaplessColumns]="true">
+    <ng-template spectreKanbanBoardTemplate let-taskStatus>
+      <spectre-kanban-board [data]="taskStatus" [items]="taskStatus.tasks" trackItemByKey="taskId" class="d-block simple-box-shadow">
+        <ng-template spectreKanbanBoardTitle>
+          <h6>{{ taskStatus.name }}</h6>
+        </ng-template>
+
+        <ng-template spectreKanbanBoardItemTemplate let-task>
+          <spectre-kanban-board-item [data]="task">
+            <ng-template spectreKanbanBoardItemContent>
+              <spectre-tile class="kanban-tile" [centered]="true">
+                <ng-template spectreTileIcon>
+                </ng-template>
+                <ng-template spectreTileTitle>
+                  <span class="text-ellipsis" [title]="task.name">{{ task.name }}</span>
+                </ng-template>
+                <ng-template spectreTileSubtitle>
+                  <span class="text-ellipsis" [title]="task.taskAreaName">{{ task.taskAreaName }}</span>
+                </ng-template>
+                <ng-template spectreTileAction>
+                  <button spectreButton="link" [spectreContextMenu]="taskKanbanBoardItemContextMenu" [contextMenuContext]="task" contextMenuEvent="click" contextMenuAnchor="target">
+                    <i spectreIcon="more-vert"></i>
+                  </button>
+                </ng-template>
+              </spectre-tile>
+            </ng-template>
+          </spectre-kanban-board-item>
+        </ng-template>
+
+        <ng-template spectreKanbanBoardFooter>
+          <button spectreButton>
+            <i spectreIcon="plus"></i>
+          </button>
+        </ng-template>
+      </spectre-kanban-board>
+    </ng-template>
+  </spectre-kanban>
+</div>
+
+<div>
+  <spectre-tree [branches]="treeBranches" [leafs]="treeLeafs" [(selectedBranches)]="selectedTreeBranches" [(selectedLeafs)]="selectedTreeLeafs" trackBranchByKey="id" trackLeafByKey="id" trackNodeParentByKey="parentId" trackNodeIndexByKey="index" (nodeMove)="onTreeNodeMove($event)">
+    <ng-template spectreTreeBranch let-branch let-children="children" let-tree="tree">
+      <div (click)="tree.handleNodeSelectionClick(branch, $event); tree.toggleBranchExpanded(branch)">
+        <i [appFaIcon]="tree.getNodeMetadata(branch).expanded ? 'folder-open' : 'folder'" style="margin-right: 0.25rem;"></i>
+        <span>{{ branch.id }} {{ '[' + children.length + ']' }}</span>
+      </div>
+    </ng-template>
+
+    <ng-template spectreTreeLeaf let-leaf let-tree="tree">
+      <div (click)="tree.handleNodeSelectionClick(leaf, $event)">
+        <i [appFaIcon]="'file'" style="margin-right: 0.25rem;"></i>
+        <span>{{ leaf.id }}</span>
+      </div>
+    </ng-template>
+  </spectre-tree>
+</div>
+
+<ng-template #testModal let-modal="modal">
+  <spectre-modal-container [modal]="modal">
+    <ng-template spectreModalContainerTitle>Title</ng-template>
+    <ng-template spectreModalContainerBody>
+      <spectre-input [(ngModel)]="strValue"></spectre-input>
+      <spectre-input [(ngModel)]="strValue"></spectre-input>
+      <spectre-input [(ngModel)]="strValue"></spectre-input>
+      <spectre-input [(ngModel)]="strValue"></spectre-input>
+      <spectre-input [(ngModel)]="strValue"></spectre-input>
+      <spectre-input [(ngModel)]="strValue"></spectre-input>
+      <spectre-input [(ngModel)]="strValue"></spectre-input>
+      <spectre-input [(ngModel)]="strValue"></spectre-input>
+      <spectre-input [(ngModel)]="strValue"></spectre-input>
+      <spectre-input [(ngModel)]="strValue"></spectre-input>
+      <spectre-input [(ngModel)]="strValue"></spectre-input>
+      <spectre-input [(ngModel)]="strValue"></spectre-input>
+      <spectre-input [(ngModel)]="strValue"></spectre-input>
+      <spectre-input [(ngModel)]="strValue"></spectre-input>
+      <spectre-input [(ngModel)]="strValue"></spectre-input>
+      <spectre-input [(ngModel)]="strValue"></spectre-input>
+    </ng-template>
+    <ng-template spectreModalContainerFooter>
+      <button spectreButton [spectreModal]="testModal">FooterButton</button>
+    </ng-template>
+  </spectre-modal-container>
+</ng-template>
+
+<ng-template #tableContextMenu let-event let-menu="menu">
+  <spectre-menu *ngIf="event.type === 'header'">
+    <spectre-menu-item>
+      <a href="#">
+        <spectre-tile [centered]="true">
+          <ng-template spectreTileIconBox>
+            <i appFaIcon="envelope" kind="fal"></i>
+          </ng-template>
+          <ng-template spectreTileTitle>Title</ng-template>
+          <ng-template spectreTileSubtitle>This is some random subtitle</ng-template>
+          <ng-template spectreTileAction>
+            <button spectreButton="link">
+              <i spectreIcon="more-vert"></i>
+            </button>
+          </ng-template>
+        </spectre-tile>
+      </a>
+    </spectre-menu-item>
+  </spectre-menu>
+
+  <spectre-menu *ngIf="event.type === 'body'">
+    <spectre-menu-item>
+      <a href="#">Item1</a>
+    </spectre-menu-item>
+    <spectre-menu-item>
+      <a class="c-hand" (click)="menu.hide()" spectreBadge="2">Item2</a>
+    </spectre-menu-item>
+    <spectre-divider text="Settings"></spectre-divider>
+    <spectre-menu-item>
+      <a class="c-hand" (click)="boolValue = !boolValue">Item3</a>
+      <ng-template spectreMenuItemBadge>
+        <spectre-checkbox [(ngModel)]="boolValue"></spectre-checkbox>
+      </ng-template>
+    </spectre-menu-item>
+  </spectre-menu>
+
+  <spectre-card *ngIf="event.type === 'card'">
+    <ng-template spectreCardTitle>Hello World!</ng-template>
+    <ng-template spectreCardSubtitle>This is just a subtitle...</ng-template>
+    <ng-template spectreCardBody>
+      <spectre-input [(ngModel)]="strValue"></spectre-input>
+    </ng-template>
+    <ng-template spectreCardFooter>
+      <button spectreButton [spectreContextMenu]="tableContextMenu" [contextMenuContext]="{ type: 'card' }"
+        [contextMenuEvent]="'click'">FooterButton</button>
+    </ng-template>
+  </spectre-card>
+
+  <spectre-calendar *ngIf="event.type === 'date'" [(ngModel)]="dateStr" style="background: white; max-width: 280px;">
+  </spectre-calendar>
+</ng-template>
+
+<ng-template #testPopover>
+  <spectre-card>
+    <ng-template spectreCardTitle>Hello World!</ng-template>
+    <ng-template spectreCardSubtitle>This is just a subtitle...</ng-template>
+    <ng-template spectreCardBody>
+      <spectre-input [(ngModel)]="strValue"></spectre-input>
+    </ng-template>
+    <ng-template spectreCardFooter>
+      <button spectreButton>FooterButton</button>
+    </ng-template>
+  </spectre-card>
+</ng-template>
+
+<ng-template #tablePopover let-rows>
+  <div style="width: 600px;">
+    <div class="columns col-gapless"
+      style="background: #ffffff; box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);">
+      <div class="column">
+        <button spectreButton="link" class="c-auto">Auswahl</button>
+      </div>
+      <div class="column col-3">
+        <spectre-button-group [stretch]="true">
+          <button spectreButton="primary">TEST</button>
+        </spectre-button-group>
+      </div>
+    </div>
+    <div>
+      <!-- <spectre-table [rows]="rows" [selected]="selectedRows(rows)" (select)="selectRows($event)">
+        <spectre-table-column prop="name" name="Name">
+        </spectre-table-column>
+        <spectre-table-column prop="value" name="Value">
+        </spectre-table-column>
+      </spectre-table> -->
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #addTabContextMenu>
+  <spectre-card style="width: 200px;">
+    <ng-template spectreCardTitle>New Tab</ng-template>
+    <ng-template spectreCardBody>
+      <spectre-input-group>
+        <spectre-input [(ngModel)]="strValue" (keydown.enter)="button.click()"></spectre-input>
+        <!-- <button spectreButton #button (click)="strValue ? tabs.push({ name: strValue }) : undefined; strValue = '';">
+          <i spectreIcon="plus"></i>
+        </button> -->
+        <button spectreButton #button (click)="strValue ? tabs.push({ name: strValue }) : undefined; strValue = '';">
+          <i spectreIcon="plus"></i>
+        </button>
+      </spectre-input-group>
+    </ng-template>
+  </spectre-card>
+</ng-template>
+
+<ng-template #taskKanbanBoardItemContextMenu let-task>
+  <spectre-menu>
+    <spectre-menu-item>
+      <a [routerLink]="['/tasks', task.taskId]">
+        <spectre-columns>
+          <spectre-column xxl="2">
+            <i appFaIcon="edit" kind="far"></i>
+          </spectre-column>
+          <spectre-column>
+            <span>Bearbeiten</span>
+          </spectre-column>
+        </spectre-columns>
+      </a>
+    </spectre-menu-item>
+
+    <spectre-menu-item>
+      <a [routerLink]="['/tasks', task.taskId]">
+        <i appFaIcon="edit" kind="far"></i>
+        <span>Bearbeiten</span>
+      </a>
+    </spectre-menu-item>
+
+    <spectre-menu-item>
+      <a [routerLink]="['/tasks', task.taskId]">Bearbeiten</a>
+      <ng-template spectreMenuItemBadge>
+        <i appFaIcon="edit" kind="far"></i>
+      </ng-template>
+    </spectre-menu-item>
+  </spectre-menu>
+</ng-template>

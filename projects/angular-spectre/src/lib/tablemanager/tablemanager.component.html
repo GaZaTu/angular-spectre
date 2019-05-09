@@ -1,0 +1,76 @@
+<div class="tablemanager-head s-title">
+  <spectre-button-group [stretch]="true">
+    <a spectreButton [routerLink]="service.newNavigationLink.path" [queryParams]="service.newNavigationLink.queryParams" (click)="navigateToNew($event)" [disabled]="!service.canNavigateToNew || loading">
+      <i spectreIcon="plus"></i>
+    </a>
+    <a spectreButton [routerLink]="service.copyNavigationLink.path" [queryParams]="service.copyNavigationLink.queryParams" (click)="navigateToCopy($event)" [disabled]="!service.canNavigateToCopy || loading">
+      <i spectreIcon="copy"></i>
+    </a>
+    <button spectreButton (click)="service.delete()" [disabled]="!service.canDelete || loading">
+      <i spectreIcon="delete"></i>
+    </button>
+    <a spectreButton [routerLink]="service.maskNavigationLink.path" [queryParams]="service.maskNavigationLink.queryParams" (click)="navigateToMask($event)" [disabled]="!service.canNavigateToExisting || loading">
+      <i spectreIcon="edit"></i>
+    </a>
+    <button spectreButton (click)="service.cancel()" [disabled]="!service.canCancel || loading">
+      <i spectreIcon="stop"></i>
+    </button>
+    <button spectreButton (click)="service.save()" [disabled]="!service.canSave || loading">
+      <i spectreIcon="check"></i>
+    </button>
+    <button spectreButton (click)="service.refresh()" [disabled]="!service.canRefresh || loading">
+      <i spectreIcon="refresh"></i>
+    </button>
+    <button spectreButton [disabled]="true">
+      <i spectreIcon="more-vert"></i>
+    </button>
+    <a spectreButton [routerLink]="service.listNavigationLink.path" [queryParams]="service.listNavigationLink.queryParams" (click)="navigateToList($event)" [disabled]="!service.canNavigateToList || loading">
+      <i spectreIcon="menu"></i>
+    </a>
+    <a spectreButton [routerLink]="service.maskNavigationLink.path" [queryParams]="service.maskNavigationLink.queryParams" (click)="navigateToMask($event)" [disabled]="!service.canNavigateToMask || loading">
+      <i spectreIcon="apps"></i>
+    </a>
+    <ng-container *ngIf="service.onMask">
+      <a spectreButton [routerLink]="service.firstNavigationLink.path" [queryParams]="service.firstNavigationLink.queryParams" (click)="goToFirst($event)" [disabled]="!service.canGoToFirst || loading">
+        <i spectreIcon="arrow-left"></i>
+      </a>
+      <a spectreButton [routerLink]="service.previousNavigationLink.path" [queryParams]="service.previousNavigationLink.queryParams" (click)="goToPrevious($event)" [disabled]="!service.canGoToPrevious || loading">
+        <i spectreIcon="back"></i>
+      </a>
+      <a spectreButton [routerLink]="service.nextNavigationLink.path" [queryParams]="service.nextNavigationLink.queryParams" (click)="goToNext($event)" [disabled]="!service.canGoToNext || loading">
+        <i spectreIcon="forward"></i>
+      </a>
+      <a spectreButton [routerLink]="service.lastNavigationLink.path" [queryParams]="service.lastNavigationLink.queryParams" (click)="goToLast($event)" [disabled]="!service.canGoToLast || loading">
+        <i spectreIcon="arrow-right"></i>
+      </a>
+    </ng-container>
+    <ng-container *ngIf="!service.onMask">
+      <button spectreButton (click)="service.goToFirst()" [disabled]="!service.canGoToFirst || loading">
+        <i spectreIcon="arrow-left"></i>
+      </button>
+      <button spectreButton (click)="service.goToPrevious()" [disabled]="!service.canGoToPrevious || loading">
+        <i spectreIcon="back"></i>
+      </button>
+      <button spectreButton (click)="service.goToNext()" [disabled]="!service.canGoToNext || loading">
+        <i spectreIcon="forward"></i>
+      </button>
+      <button spectreButton (click)="service.goToLast()" [disabled]="!service.canGoToLast || loading">
+        <i spectreIcon="arrow-right"></i>
+      </button>
+    </ng-container>
+  </spectre-button-group>
+  <spectre-progress [flat]="true" [value]="loading && progress && progress.loaded" [max]="loading && progress && progress.total" [loading]="loading"></spectre-progress>
+</div>
+
+<div class="tablemanager-body">
+  <ng-container [ngTemplateOutlet]="routerOutlet"></ng-container>
+</div>
+
+<ng-template #tableContextMenu let-event>
+  <spectre-menu>
+    <spectre-menu-item>
+      <i spectreIcon="copy"></i>
+      <span>Kopieren</span>
+    </spectre-menu-item>
+  </spectre-menu>
+</ng-template>

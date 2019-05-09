@@ -1,0 +1,3 @@
+<select #select [attr.id]="id" [ngClass]="selectClass" [value]="key" (change)="onChange($event)" [disabled]="disabled" [required]="required">
+  <option *ngFor="let option of options?.toArray(); trackBy: trackOptionFn" [value]="option.key">{{ option.text }}</option>
+</select>

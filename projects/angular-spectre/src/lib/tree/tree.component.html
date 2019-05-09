@@ -1,0 +1,41 @@
+<div *ngIf="flat" class="root flat {{ unselectable ? 'unselectable' : '' }}">
+  <div class="nodes nav" cdkDropList cdkDropListLockAxis="y" (cdkDropListDropped)="onNodeDropped($event)">
+    <ng-container *ngFor="let node of flatTreeNodes; trackBy: trackNodeBy">
+      <div *ngIf="!node.parent || branchMetadata.get(node.parent.key).expanded" class="node nav-item {{ (node.leaf ? leafMetadata : branchMetadata).get(node.key).selected ? 'active' : '' }}" [style.margin-left]="(0.5 * node.level) + 'rem'" cdkDrag [cdkDragData]="node" (cdkDragStarted)="onNodeDragStarted($event)" (cdkDragEnded)="onNodeDragEnded($event)">
+        <a *ngIf="node.branch" class="branch c-hand">
+          <ng-container [ngTemplateOutlet]="branchTemplate" [ngTemplateOutletContext]="{ $implicit: node.branch, isLeaf: false, tree: this, children: node.children }"></ng-container>
+        </a>
+
+        <a *ngIf="node.leaf" class="leaf c-hand">
+          <ng-container [ngTemplateOutlet]="leafTemplate" [ngTemplateOutletContext]="{ $implicit: node.leaf, isLeaf: true, tree: this }"></ng-container>
+        </a>
+      </div>
+
+      <div *ngIf="dragging && node.branch && (!node.parent || branchMetadata.get(node.parent.key).expanded)" class="node nav-item" [style.margin-left]="(0.5 * node.level) + 'rem'" cdkDrag>
+        <a class="virtual-leaf c-hand">
+          <span>=========</span>
+        </a>
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+<div *ngIf="!flat" class="root nested {{ unselectable ? 'unselectable' : '' }}">
+  <ng-container [ngTemplateOutlet]="nodeListTemplate" [ngTemplateOutletContext]="{ key: 'root', nodes: rootTreeNodes }"></ng-container>
+</div>
+
+<ng-template #nodeListTemplate let-key="key" let-nodes="nodes">
+  <div [id]="getDropListId(key)" class="nodes nav" cdkDropList [cdkDropListConnectedTo]="getConnectedDropListIds(key)">
+    <div *ngFor="let node of nodes; trackBy: trackNodeBy" class="node nav-item {{ (node.leaf ? leafMetadata : branchMetadata).get(node.key).selected ? 'active' : '' }}" cdkDrag>
+      <a *ngIf="node.branch" class="branch c-hand">
+        <ng-container [ngTemplateOutlet]="branchTemplate" [ngTemplateOutletContext]="{ $implicit: node.branch, isLeaf: false, tree: this, children: node.children }"></ng-container>
+      </a>
+
+      <a *ngIf="node.leaf" class="leaf c-hand">
+        <ng-container [ngTemplateOutlet]="leafTemplate" [ngTemplateOutletContext]="{ $implicit: node.leaf, isLeaf: true, tree: this }"></ng-container>
+      </a>
+
+      <ng-container *ngIf="node.branch && branchMetadata.get(node.key).expanded" [ngTemplateOutlet]="nodeListTemplate" [ngTemplateOutletContext]="{ key: node.key, nodes: node.children }"></ng-container>
+    </div>
+  </div>
+</ng-template>

@@ -1,0 +1,26 @@
+<div *ngIf="imagePos === 0" class="card-image">
+  <img [src]="image" class="img-responsive">
+</div>
+<div *ngIf="title || subtitle" class="card-header">
+  <div *ngIf="title" class="card-title text-bold">
+    <ng-container [ngTemplateOutlet]="title"></ng-container>
+  </div>
+  <div *ngIf="subtitle" class="card-subtitle text-gray">
+    <ng-container [ngTemplateOutlet]="subtitle"></ng-container>
+  </div>
+</div>
+<div *ngIf="imagePos === 1" class="card-image">
+  <img [src]="image" class="img-responsive">
+</div>
+<div *ngIf="body" class="card-body {{ withoutPadding ? 'without-padding' : '' }}">
+  <ng-container [ngTemplateOutlet]="body"></ng-container>
+</div>
+<div *ngIf="imagePos === 2" class="card-image">
+  <img [src]="image" class="img-responsive">
+</div>
+<div *ngIf="footer" class="card-footer">
+  <ng-container [ngTemplateOutlet]="footer"></ng-container>
+</div>
+<div *ngIf="imagePos === 3" class="card-image">
+  <img [src]="image" class="img-responsive">
+</div>

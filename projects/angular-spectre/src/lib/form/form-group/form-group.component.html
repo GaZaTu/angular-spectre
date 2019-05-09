@@ -1,0 +1,28 @@
+<ng-container *ngIf="horizontal">
+  <div class="col-3 col-sm-12">
+    <label *ngIf="label || labelTemplate" class="form-label label-{{ size }} {{ labelClass }}" [attr.for]="controlId" (click)="labelClick.emit($event)">
+      <span *ngIf="label">{{ label }}</span>
+      <ng-container *ngIf="labelTemplate" [ngTemplateOutlet]="labelTemplate"></ng-container>
+    </label>
+  </div>
+  <div class="col-9 col-sm-12">
+    <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
+    <div *ngIf="hintValue" class="form-input-hint input-{{ size }}">{{ hintValue }}</div>
+  </div>
+  <!-- <div class="col-3 col-sm-12">
+    <span *ngIf="hintValue" class="form-input-hint input-{{ size }} form-checkbox">{{ hintValue }}</span>
+  </div> -->
+</ng-container>
+
+<ng-container *ngIf="!horizontal">
+  <label *ngIf="label || labelTemplate" class="form-label label-{{ size }} {{ labelClass }}" [attr.for]="controlId" (click)="labelClick.emit($event)">
+    <span *ngIf="label">{{ label }}</span>
+    <ng-container *ngIf="labelTemplate" [ngTemplateOutlet]="labelTemplate"></ng-container>
+  </label>
+  <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
+  <span *ngIf="hintValue" class="form-input-hint input-{{ size }}">{{ hintValue }}</span>
+</ng-container>
+
+<ng-template #contentTemplate>
+  <ng-content></ng-content>
+</ng-template>

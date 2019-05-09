@@ -1,0 +1,5 @@
+<label [ngClass]="labelClass">
+  <input [attr.id]="id" [type]="(type === 'radio') ? 'radio' : 'checkbox'" [checked]="checked" (change)="onChange($event)" [disabled]="disabled" [required]="required">
+  <i class="form-icon"></i>
+  <ng-content></ng-content>
+</label>

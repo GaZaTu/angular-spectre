@@ -1,0 +1,166 @@
+<table [class]="tableClass" [style.max-height]="maxHeight" [style.background]="visibleData.length === 0 ? '#f7f8f9' : undefined">
+  <caption *ngIf="captionTemplate">
+    <ng-container [ngTemplateOutlet]="captionTemplate"></ng-container>
+  </caption>
+
+  <thead *ngIf="!hideHead" [style.z-index]="nested ? 1 : undefined" [class.hide-mobile]="hideHeadOnMobile">
+    <tr cdkDropList cdkDropListOrientation="horizontal" cdkDropListLockAxis="x" (cdkDropListDropped)="onColumnDropListDropped($event)" [cdkDropListDisabled]="nested">
+      <th *ngFor="let column of visibleColumns; trackBy: trackColumnBy" class="{{ column.class }}" [style.flex]="columnMetaData[column.prop].flex || column.flex" [style.min-width]="columnMetaData[column.prop].minWidth || column.minWidth" cdkDrag [cdkDragData]="column" [spectreContextMenu]="headContextMenu" [contextMenuContext]="column">
+        <spectre-form-group size="xs" labelClass="{{ nested ? '' : 'c-hand' }}" (labelClick)="onColumnNameClick($event, column)" [connectLabelWithControl]="false">
+          <ng-template spectreFormGroupLabel>
+            <span style="margin-right: 3px;" cdkDragHandle>{{ column.title }}</span>
+            <i *ngIf="columnMetaData[column.prop].sortDir === 1" spectreIcon="arrow-up"></i>
+            <i *ngIf="columnMetaData[column.prop].sortDir === -1" spectreIcon="arrow-down"></i>
+          </ng-template>
+
+          <spectre-input-group *ngIf="column.filterKind">
+            <spectre-input *ngIf="column.filterKind === 'input'" [ngModel]="getColumnFilterValue(column)" (ngModelChange)="onFilterChange(column, $event)"></spectre-input>
+            <spectre-input *ngIf="column.filterKind === 'input-select'" [ngModel]="getColumnFilterValue(column)" (ngModelChange)="onFilterChange(column, $event)" [options]="column.filterOptions"></spectre-input>
+            <spectre-select *ngIf="column.filterKind === 'select'" [ngModel]="getColumnFilterValue(column)" (ngModelChange)="onFilterChange(column, $event, { exact: true })">
+              <spectre-option value=""></spectre-option>
+              <spectre-option *ngFor="let option of column.filterOptions" [value]="option">{{ option }}</spectre-option>
+            </spectre-select>
+            <spectre-autocomplete *ngIf="column.filterKind === 'multi-select'" [tagNames]="getColumnFilterValue(column)" (tagNamesChange)="onFilterChange(column, $event)" [optionNames]="column.filterOptions">
+              <ng-template spectreAutocompleteOption let-option>
+                <span [innerHTML]="option.nameHtml"></span>
+              </ng-template>
+            </spectre-autocomplete>
+            <i spectreIcon="cross" (click)="onFilterChange(column, '')"></i>
+          </spectre-input-group>
+        </spectre-form-group>
+
+        <div *ngIf="!nested" class="resize-handle" (mousedown)="onResizeHandleMousedown(column, $event)"></div>
+      </th>
+    </tr>
+
+    <tr class="progressbar-row">
+      <spectre-progress style="width: 100%; margin-top: -17px;" [loading]="loading"></spectre-progress>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngIf="visibleData.length === 0" class="empty-row">
+      <ng-container *ngIf="emptyTemplate" [ngTemplateOutlet]="emptyTemplate"></ng-container>
+      <spectre-empty *ngIf="!emptyTemplate" style="display: block; width: 100%; background: unset;">
+        <ng-template spectreEmptyTitle>
+          {{ 'spectreTable.empty' | config }}
+        </ng-template>
+      </spectre-empty>
+    </tr>
+
+    <ng-container *ngFor="let row of visibleData; trackBy: trackRowBy; let rowIndex = index">
+      <tr class="data-row {{ rowMetaData[trackRowBy(rowIndex, row)].selected ? 'active' : '' }}" (click)="onRowClick(row, rowIndex, $event)">
+        <td *ngFor="let column of visibleColumns; trackBy: trackColumnBy" [style.flex]="columnMetaData[column.prop].flex || column.flex" [style.min-width]="columnMetaData[column.prop].minWidth || column.minWidth" [attr.data-label]="column.title" [spectreContextMenu]="rowSpectreContextMenu" [contextMenuContext]="{ table: this, row: row, column: column }" class="{{ column.class }}">
+          <ng-container *ngIf="column.cellTemplate" [ngTemplateOutlet]="column.cellTemplate" [ngTemplateOutletContext]="{ table: this, value: getRowValue(row, column), row: row, column: column }">
+          </ng-container>
+          <span *ngIf="!column.cellTemplate" class="{{ tableMetaData.noWhitespaceWrap ? 'text-ellipsis' : 'whitespace-pre-wrap' }}">{{ getRowValue(row, column) }}</span>
+        </td>
+      </tr>
+
+      <tr class="detail-row" *ngIf="rowDetailTemplate && rowMetaData[trackRowBy(rowIndex, row)].expanded">
+        <ng-container [ngTemplateOutlet]="rowDetailTemplate" [ngTemplateOutletContext]="{ $implicit: row }"></ng-container>
+      </tr>
+    </ng-container>
+  </tbody>
+</table>
+
+<div class="table-footer">
+  <div *ngIf="footerTemplate" class="footer-wrapper">
+    <ng-container [ngTemplateOutlet]="footerTemplate"></ng-container>
+  </div>
+
+  <div *ngIf="!nested" class="pagination-wrapper">
+    <spectre-pagination [page]="page" [pageCount]="pageCount" (pageChange)="onPageChange($event)">
+    </spectre-pagination>
+  </div>
+</div>
+
+<ng-template #headContextMenu let-menu="menu">
+  <spectre-menu *ngIf="!nested">
+    <ng-container *ngIf="selectionChange.observers.length">
+      <spectre-menu-item>
+        <a class="c-hand" (click)="selection = visibleData; menu.hide();">
+          {{ 'spectreTable.selectVisible' | config }}
+        </a>
+      </spectre-menu-item>
+
+      <spectre-menu-item>
+        <a class="c-hand" (click)="selection = filteredData; menu.hide();">
+          {{ 'spectreTable.selectFiltered' | config }}
+        </a>
+      </spectre-menu-item>
+
+      <spectre-divider></spectre-divider>
+    </ng-container>
+
+    <spectre-menu-item>
+      <a class="c-hand" (click)="resetColumnMetaData(); menu.hide();">
+        {{ 'spectreTable.resetColumns' | config }}
+      </a>
+    </spectre-menu-item>
+
+    <spectre-menu-item>
+      <a class="c-hand" (click)="saveColumnMetaData(); menu.hide();">
+        {{ 'spectreTable.saveColumns' | config }}
+      </a>
+    </spectre-menu-item>
+
+    <spectre-menu-item>
+      <a class="c-hand" (click)="loadColumnMetaData(); menu.hide();">
+        {{ 'spectreTable.loadColumns' | config }}
+      </a>
+    </spectre-menu-item>
+
+    <spectre-divider></spectre-divider>
+
+    <spectre-menu-item>
+      <a class="c-hand" [spectreContextMenu]="columnVisibilityMenu" contextMenuEvent="click" contextMenuAnchor="target">
+        {{ 'spectreTable.setColumnVisibility' | config }}
+      </a>
+    </spectre-menu-item>
+
+    <spectre-menu-item>
+      <a class="c-hand" [spectreContextMenu]="settingsMenu" contextMenuEvent="click" contextMenuAnchor="target">
+        {{ 'spectreTable.settings' | config }}
+      </a>
+    </spectre-menu-item>
+  </spectre-menu>
+</ng-template>
+
+<ng-template #columnVisibilityMenu>
+  <spectre-menu>
+    <spectre-menu-item *ngFor="let column of orderedColumnsWithTitle; trackBy: trackColumnBy">
+      <a class="c-hand" (click)="onToggleColumnVisiblity(column)" [spectreBadge]="columnMetaData[column.prop].hidden ? undefined : ''">
+        <span>{{ column.title }}</span>
+      </a>
+    </spectre-menu-item>
+  </spectre-menu>
+</ng-template>
+
+<ng-template #settingsMenu>
+  <spectre-menu>
+    <spectre-menu-item>
+      <a class="c-hand" (click)="tableMetaData.autosaveColumns = !tableMetaData.autosaveColumns" [spectreBadge]="tableMetaData.autosaveColumns ? '' : undefined">
+        {{ 'spectreTable.autosaveColumns' | config }}
+      </a>
+    </spectre-menu-item>
+
+    <spectre-menu-item>
+      <a class="c-hand" (click)="tableMetaData.autoloadColumns = !tableMetaData.autoloadColumns" [spectreBadge]="tableMetaData.autoloadColumns ? '' : undefined">
+        {{ 'spectreTable.autoloadColumns' | config }}
+      </a>
+    </spectre-menu-item>
+
+    <spectre-menu-item>
+      <a class="c-hand" (click)="tableMetaData.noWhitespaceWrap = !tableMetaData.noWhitespaceWrap" [spectreBadge]="tableMetaData.noWhitespaceWrap ? '' : undefined">
+        {{ 'spectreTable.noWhitespaceWrap' | config }}
+      </a>
+    </spectre-menu-item>
+
+    <spectre-menu-item>
+      <a class="c-hand" (click)="tableMetaData.showFulltextsearch = !tableMetaData.showFulltextsearch" [spectreBadge]="tableMetaData.showFulltextsearch ? '' : undefined">
+        {{ 'spectreTable.showFulltextsearch' | config }}
+      </a>
+    </spectre-menu-item>
+  </spectre-menu>
+</ng-template>

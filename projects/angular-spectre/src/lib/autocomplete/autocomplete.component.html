@@ -1,0 +1,45 @@
+<div class="form-autocomplete-input form-input input-{{ size }} {{ focused ? 'is-focused' : '' }}">
+  <span *ngFor="let tag of tags; trackBy: trackTagFn" class="chip" [attr.title]="tag.info">
+    <img *ngIf="tag.image" class="avatar avatar-sm" [src]="tag.image">
+    <figure *ngIf="tag.initials && !tag.image" class="avatar avatar-sm" [attr.data-initial]="tag.initials"></figure>
+    <a *ngIf="tag.href" [href]="tag.href" target="_blank">{{ tag.name }}</a>
+    <span *ngIf="!tag.href">{{ tag.name }}</span>
+    <a *ngIf="!disabled" class="btn btn-clear" (click)="remove(tag)"></a>
+  </span>
+
+  <input *ngIf="!disabled && showInput" #searchInput [attr.id]="formGroup?.id" class="form-input input-{{ size }}" type="text" placeholder="..." [value]="search" (keydown)="onSearchKeydown($event)" (keyup)="onSearchKeyup($event)" (focus)="setFocus(true)" (blur)="setFocus(false)">
+</div>
+
+<!-- <ul *ngIf="!disabled && focused" [id]="controlId + '-menu'" class="menu">
+  <li *ngFor="let option of filteredOptions; trackBy: trackTagFn" [id]="controlId + '-menu-item-' + option.name" class="menu-item">
+    <a class="c-hand {{ option === selectedTag ? 'active' : '' }}" (mousedown)="onOptionMousedown(option, $event)">
+      <ng-container [ngTemplateOutlet]="optionTemplate || defaultOptionTemplate" [ngTemplateOutletContext]="{ $implicit: option }"></ng-container>
+    </a>
+  </li>
+</ul> -->
+
+<ng-template #menuTemplate>
+  <ul [id]="controlId + '-menu'" class="menu">
+    <li *ngFor="let option of filteredOptions; trackBy: trackTagFn" [id]="controlId + '-menu-item-' + option.name" class="menu-item">
+      <a class="c-hand {{ option === selectedTag ? 'active' : '' }}" (mousedown)="onOptionMousedown(option, $event)">
+        <ng-container [ngTemplateOutlet]="optionTemplate || defaultOptionTemplate" [ngTemplateOutletContext]="{ $implicit: option }"></ng-container>
+      </a>
+    </li>
+  </ul>
+</ng-template>
+
+<ng-template #defaultOptionTemplate let-option>
+  <div class="tile tile-centered">
+    <div *ngIf="option.image || option.initials" class="tile-icon">
+      <img *ngIf="option.image" class="avatar avatar-sm" [src]="option.image">
+      <figure *ngIf="option.initials && !option.image" class="avatar avatar-sm" [attr.data-initial]="option.initials"></figure>
+    </div>
+    <div class="tile-content">
+      <div class="columns">
+        <div class="column col-3" [innerHTML]="option.nameHtml"></div>
+        <div class="column col-3" [innerHTML]="option.subtitleHtml"></div>
+        <div class="column col-6" [innerHTML]="option.infoHtml"></div>
+      </div>
+    </div>
+  </div>
+</ng-template>

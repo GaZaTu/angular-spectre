@@ -1,0 +1,21 @@
+<spectre-panel [style.height]="kanbanService.height.value">
+  <ng-template *ngIf="titleTemplate" spectrePanelTitle>
+    <ng-container [ngTemplateOutlet]="titleTemplate"></ng-container>
+  </ng-template>
+
+  <ng-template *ngIf="subtitleTemplate" spectrePanelSubtitle>
+    <ng-container [ngTemplateOutlet]="subtitleTemplate"></ng-container>
+  </ng-template>
+
+  <ng-template spectrePanelBody>
+    <div cdkDropList #dropList="cdkDropList" [cdkDropListData]="this" [cdkDropListConnectedTo]="dropListsWithoutThis" [cdkDropListEnterPredicate]="dropListPredicate" (cdkDropListDropped)="onDropListDropped($event)">
+      <div *ngFor="let item of items; trackBy: trackItemByFnOrIdx" class="kanban-board-item" cdkDrag [cdkDragData]="item" [cdkDragDisabled]="kanbanService.itemMetaData.value[trackItemBy(item)].loading" [class.loading]="kanbanService.itemMetaData.value[trackItemBy(item)].loading">
+        <ng-container [ngTemplateOutlet]="kanbanBoardItemTemplate" [ngTemplateOutletContext]="{ $implicit: item, metaData: kanbanService.itemMetaData.value[trackItemBy(item)] }"></ng-container>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template *ngIf="footerTemplate" spectrePanelFooter>
+    <ng-container [ngTemplateOutlet]="footerTemplate"></ng-container>
+  </ng-template>
+</spectre-panel>

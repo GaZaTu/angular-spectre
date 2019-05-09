@@ -1,0 +1,24 @@
+<div *ngFor="let modal of service.modals.value" class="modal modal-{{ modal.size }} active">
+  <a *ngIf="modal.closable" class="modal-overlay" (click)="service.close(modal)"></a>
+  <span *ngIf="!modal.closable" class="modal-overlay"></span>
+  <ng-container [ngTemplateOutlet]="modal.template" [ngTemplateOutletContext]="{ $implicit: modal.context, modal: modal }"></ng-container>
+</div>
+
+<ng-template #confirmationModalTemplate let-confirmation let-modal="modal">
+  <spectre-modal-container [modal]="modal">
+    <ng-template spectreModalContainerBody>
+      <p>{{ confirmation.text }}</p>
+    </ng-template>
+
+    <ng-template spectreModalContainerFooter>
+      <div class="btn-group">
+        <button class="btn success" (click)="modal.close(); confirmation.resolve();">
+          <i class="icon icon-check"></i>
+        </button>
+        <button class="btn error" (click)="modal.close(); confirmation.reject();">
+          <i class="icon icon-cross"></i>
+        </button>
+      </div>
+    </ng-template>
+  </spectre-modal-container>
+</ng-template>

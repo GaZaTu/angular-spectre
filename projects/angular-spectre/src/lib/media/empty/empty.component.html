@@ -1,0 +1,15 @@
+<div *ngIf="icon" class="empty-icon">
+  <ng-container [ngTemplateOutlet]="icon"></ng-container>
+</div>
+
+<p *ngIf="title" class="empty-title h5">
+  <ng-container [ngTemplateOutlet]="title"></ng-container>
+</p>
+
+<p *ngIf="subtitle" class="empty-subtitle">
+  <ng-container [ngTemplateOutlet]="subtitle"></ng-container>
+</p>
+
+<div *ngFor="let action of actions?.toArray()" class="empty-action">
+  <ng-container [ngTemplateOutlet]="action"></ng-container>
+</div>

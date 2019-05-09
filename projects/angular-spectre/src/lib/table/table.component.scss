@@ -1,0 +1,168 @@
+@import "./mini-css-table.scss";
+
+.whitespace-pre-wrap {
+  white-space: pre-wrap;
+}
+
+table {
+  thead th,
+  tbody td {
+    padding: 6px;
+  }
+
+  thead {
+    z-index: 50;
+    background: white;
+    box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.2);
+
+    tr {
+      th {
+        position: relative;
+
+        .resize-handle {
+          top: 0px;
+          right: 0px;
+          width: 2px;
+          visibility: hidden;
+          position: absolute;
+          cursor: col-resize;
+          background-color: var(--primary-color);
+          user-select: none;
+          height: calc(100% - 8px);
+          margin-top: 4px;
+        }
+
+        &:hover {
+          .resize-handle {
+            visibility: visible;
+          }
+        }
+      }
+
+      &.progressbar-row {
+        height: 0;
+      }
+    }
+  }
+
+  &.table-hover {
+    tr.progressbar-row,
+    tr.empty-row,
+    tr.detail-row {
+      &:hover,
+      &:focus {
+        &,
+        & > td {
+          background: initial;
+        }
+      }
+    }
+  }
+}
+
+.table-footer {
+  border-top: 0.1rem solid #dadee4;
+
+  > .footer-wrapper,
+  > .pagination-wrapper {
+    margin-top: 0.3rem;
+    margin-bottom: 0.3rem;
+  }
+
+  > .footer-wrapper {
+    margin-left: 0.3rem;
+    float: left;
+    clear: left;
+  }
+
+  > .pagination-wrapper {
+    margin-right: 0.3rem;
+    float: right;
+    clear: right;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  table:not(.force-desktop-mode) {
+    thead {
+      box-shadow: unset;
+
+      tr {
+        th {
+          .resize-handle {
+            display: none;
+          }
+        }
+
+        &.progressbar-row {
+          height: initial;
+        }
+      }
+    }
+
+    tbody {
+      tr {
+        &:not(:first-child) {
+          border: unset;
+          border-top: 0.0625rem solid #bbbbbb;
+        }
+
+        &.detail-row {
+          display: none;
+        }
+      }
+    }
+
+    &:not(.horizontal) {
+      thead {
+        position: initial;
+        top: initial;
+      }
+    }
+  }
+}
+
+.table.table-hover {
+  tr.empty-row,
+  tr.detail-row {
+    &:hover,
+    &:focus {
+      &,
+      & > td {
+        background: initial;
+      }
+    }
+  }
+}
+
+.table.unselectable {
+  * {
+    user-select: none;
+  }
+}
+
+.cdk-drag-preview {
+  background: white;
+  box-sizing: border-box;
+  border-radius: 4px;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+              0 8px 10px 1px rgba(0, 0, 0, 0.14),
+              0 3px 14px 2px rgba(0, 0, 0, 0.12);
+  padding: 6px;
+  max-width: 300px;
+}
+
+/* Animate items as they're being sorted. */
+.cdk-drop-list-dragging .cdk-drag {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+/* Animate an item that has been dropped. */
+.cdk-drag-animating {
+  transition: transform 300ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.cdk-drag-disabled {
+  background: #ebebeb;
+  border-radius: 4px;
+}

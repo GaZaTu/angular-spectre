@@ -1,0 +1,19 @@
+<spectre-form [formGroup]="form" class="col-sm-12 col-md-9 col-6" size="sm" [horizontal]="true">
+  <fieldset>
+    <spectre-form-group label="Name">
+      <spectre-input formControlName="name" [required]="true"></spectre-input>
+    </spectre-form-group>
+  </fieldset>
+
+  <fieldset>
+    <spectre-form-group label="Company">
+      <spectre-input formControlName="company" [required]="true"></spectre-input>
+    </spectre-form-group>
+  </fieldset>
+
+  <fieldset>
+    <spectre-form-group label="Num">
+      <spectre-input type="number" formControlName="num" [required]="true"></spectre-input>
+    </spectre-form-group>
+  </fieldset>
+</spectre-form>

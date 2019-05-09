@@ -1,0 +1,7 @@
+<div *ngFor="let toast of toasts; let idx = index" class="toast toast-{{ toast.kind }} animated fade-in-up" [style.bottom]="(1 + (idx * 3)) + 'rem'">
+  <button *ngIf="toast.closable" class="btn btn-clear float-right" (click)="service.remove(toast)"></button>
+  <small *ngIf="toast.text">{{ toast.text }}</small>
+  <small *ngIf="toast.template">
+    <ng-container [ngTemplateOutlet]="toast.template" [ngTemplateOutletContext]="{ $implicit: toast.context }"></ng-container>
+  </small>
+</div>

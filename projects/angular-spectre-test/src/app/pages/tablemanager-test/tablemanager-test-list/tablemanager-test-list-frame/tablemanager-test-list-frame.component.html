@@ -1,0 +1,20 @@
+<spectre-card [withoutPadding]="true">
+  <ng-template spectreCardBody>
+    <spectre-table [data]="rows" trackByKey="name" [striped]="true" [hoverable]="true" [rowSpectreContextMenu]="tableContextMenu" [(selection)]="selection" rowCanExpandIfKey="info" [loading]="loading">
+      <spectre-table-column preset="expandCol">
+      </spectre-table-column>
+      <spectre-table-column prop="name" name="Name" flex="10" filterKind="input">
+      </spectre-table-column>
+      <spectre-table-column prop="company" name="Company" flex="10" filterKind="input">
+      </spectre-table-column>
+      <spectre-table-column prop="num" name="Num" flex="5">
+      </spectre-table-column>
+      <spectre-table-column prop="gender.name" name="Gender" flex="5" filterKind="select">
+      </spectre-table-column>
+
+      <ng-template spectreTableRowDetail let-row>
+        <p styles="margin-left: 2rem;">{{ row.info }}</p>
+      </ng-template>
+    </spectre-table>
+  </ng-template>
+</spectre-card>

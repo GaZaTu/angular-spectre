@@ -1,0 +1,6 @@
+<div *ngIf="menuBadge || menuBadgeLabel" class="menu-badge">
+  <ng-container *ngIf="menuBadge" [ngTemplateOutlet]="menuBadge"></ng-container>
+  <label *ngIf="menuBadgeLabel" class="label label-{{ menuBadgeLabelKind }}">{{ menuBadgeLabel }}</label>
+</div>
+
+<ng-content></ng-content>

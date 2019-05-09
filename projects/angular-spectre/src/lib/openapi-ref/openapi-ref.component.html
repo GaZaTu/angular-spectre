@@ -1,0 +1,85 @@
+<div class="openapi-ref">
+  <h3 *ngIf="openApiObject?.info?.title" class="title" [spectreBadge]="openApiObject?.info?.version || undefined">{{ openApiObject?.info?.title }}</h3>
+  <pre *ngIf="openApiObject?.servers?.length" class="base-url">[ {{ 'spectreOpenapiRef.baseUrl' | config }}: {{ openApiObject?.servers[0]?.url }} ]</pre>
+  <p *ngIf="openApiObject?.info?.description" class="description">{{ openApiObject?.info?.description }}</p>
+
+  <spectre-empty *ngIf="!openApiObject">
+    <ng-template spectreEmptyTitle>{{ 'spectreOpenapiRef.empty' | config }}</ng-template>
+  </spectre-empty>
+
+  <spectre-accordion-group>
+    <spectre-accordion *ngFor="let routeGroup of routeGroups" class="route-group" [open]="true">
+      <ng-template spectreAccordionHeader>
+        <span class="name">{{ routeGroup.name }}</span>
+        <span class="description">{{ routeGroup.description }}</span>
+      </ng-template>
+      <ng-template spectreAccordionBody>
+        <spectre-accordion-group class="openapi-ref">
+          <spectre-accordion *ngFor="let route of routeGroup.routes" [id]="'route:' + route.method + route.path" class="route {{ route.method }} {{ route.operation.deprecated ? 'deprecated' : '' }}" [open]="isRouteOpen(route)" (openChange)="onRouteOpenChange(route, $event)">
+            <ng-template spectreAccordionHeader>
+              <span class="method text-uppercase">{{ route.method }}</span>
+              <span class="path">{{ route.path }}</span>
+              <span class="summary hide-sm">{{ route.operation.summary }}</span>
+              <span *ngIf="route.operation.security?.length > 0" class="security hide-sm">
+                <span class="symbol">
+                  <ng-container *ngIf="authIconTemplate" [ngTemplateOutlet]="authIconTemplate"></ng-container>
+                  <span *ngIf="!authIconTemplate">AUTH</span>
+                </span>
+                <span class="roles">[{{ getRouteSecurity(route) }}]</span>
+              </span>
+            </ng-template>
+            <ng-template spectreAccordionBody>
+              <p *ngIf="route.operation.description" class="route-description">{{ route.operation.description }}</p>
+
+              <spectre-table [data]="getRouteParameters(route)" trackByKey="name" [nested]="true" [forceDesktopMode]="true" maxHeight="unset">
+                <ng-template spectreTableCaption>
+                  <span class="parameters-caption">{{ 'spectreOpenapiRef.parameters.caption' | config }}</span>
+                </ng-template>
+
+                <spectre-table-column prop="name" name="{{ 'spectreOpenapiRef.parameters.name' | config }}" flex="5">
+                  <ng-template spectreTableColumnCell let-row="row">
+                    <div class="parameter-name {{ row.required ? 'required' : '' }}">{{ row.name }}</div>
+                    <div *ngIf="row.schema?.type" class="parameter-type">{{ row.schema.type }}</div>
+                    <div *ngIf="row.deprecated" class="parameter-deprecated">{{ 'spectreOpenapiRef.parameters.deprecated' | config }}</div>
+                    <div class="parameter-in">({{ row.in }})</div>
+                  </ng-template>
+                </spectre-table-column>
+                <spectre-table-column prop="description" name="{{ 'spectreOpenapiRef.parameters.description' | config }}" flex="10">
+                  <ng-template spectreTableColumnCell let-row="row">
+                    <div class="parameter-description">{{ row.description }}</div>
+                    <div *ngIf="row.schema?.$ref" class="parameter-schema">
+                      <spectre-code lang="JSON">{{ getRouteParameterSchema(row) }}</spectre-code>
+                    </div>
+                  </ng-template>
+                </spectre-table-column>
+
+                <ng-template spectreTableEmpty>
+                  <spectre-empty style="display: block; width: 100%; background: unset; padding: 0 1.6rem; text-align: left;">
+                    <ng-template spectreEmptyTitle>{{ 'spectreOpenapiRef.parameters.empty' | config }}</ng-template>
+                  </spectre-empty>
+                </ng-template>
+              </spectre-table>
+
+              <spectre-table [data]="getRouteResponses(route)" trackByKey="code" [nested]="true" [forceDesktopMode]="true" maxHeight="unset">
+                <ng-template spectreTableCaption>
+                  <span class="responses-caption">{{ 'spectreOpenapiRef.responses.caption' | config }}</span>
+                </ng-template>
+
+                <spectre-table-column prop="code" name="{{ 'spectreOpenapiRef.responses.code' | config }}" flex="5">
+                </spectre-table-column>
+                <spectre-table-column prop="description" name="{{ 'spectreOpenapiRef.responses.description' | config }}" flex="10">
+                </spectre-table-column>
+
+                <ng-template spectreTableEmpty>
+                  <spectre-empty style="display: block; width: 100%; background: unset; padding: 0 1.6rem; text-align: left;">
+                    <ng-template spectreEmptyTitle>{{ 'spectreOpenapiRef.responses.empty' | config }}</ng-template>
+                  </spectre-empty>
+                </ng-template>
+              </spectre-table>
+            </ng-template>
+          </spectre-accordion>
+        </spectre-accordion-group>
+      </ng-template>
+    </spectre-accordion>
+  </spectre-accordion-group>
+</div>

@@ -1,0 +1,21 @@
+<div class="calendar-nav navbar">
+  <button class="btn btn-action btn-link btn-lg" (click)="prevMonth()">
+    <i class="icon icon-arrow-left"></i>
+  </button>
+  <div class="navbar-primary">{{ currentMonth }}</div>
+  <button class="btn btn-action btn-link btn-lg" (click)="nextMonth()">
+    <i class="icon icon-arrow-right"></i>
+  </button>
+</div>
+
+<div class="calendar-container">
+  <div class="calendar-header">
+    <div *ngFor="let d of weekdays" class="calendar-date">{{ d }}</div>
+  </div>
+
+  <div class="calendar-body">
+    <div *ngFor="let date of dateItems; trackBy: trackDateItemFn" class="calendar-date {{ !date.prevMonth || 'prev-month' }} {{ !date.nextMonth || 'next-month' }}">
+      <button class="date-item {{ !date.today || 'date-today' }}" (click)="onDateItemClick(date, $event)" (contextmenu)="onDateItemContextMenu(date, $event)" [ngStyle]="{ background: date.selected ? 'lightblue' : undefined }">{{ date.number }}</button>
+    </div>
+  </div>
+</div>

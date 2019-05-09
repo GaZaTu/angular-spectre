@@ -1,0 +1,18 @@
+.tile .tile-icon-box {
+  align-content: space-around;
+  align-items: center;
+  background: var(--primary-color);
+  border-radius: .1rem;
+  color: #fff;
+  display: flex;
+  display: -ms-flexbox;
+  -ms-flex-align: center;
+  -ms-flex-line-pack: distribute;
+  font-size: 1.2rem;
+  height: 2rem;
+  width: 2rem;
+
+  > * {
+    margin: auto;
+  }
+}

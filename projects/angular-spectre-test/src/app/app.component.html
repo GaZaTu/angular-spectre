@@ -1,0 +1,73 @@
+<app-spectre-table-column-presets></app-spectre-table-column-presets>
+
+<spectre-offcanvas>
+  <ng-template spectreOffcanvasBrand>BRAND</ng-template>
+  <ng-template spectreOffcanvasNavbar let-offcanvasService="offcanvasService">
+    <button spectreButton="primary">GitHub</button>
+    <spectre-divider [vertical]="true"></spectre-divider>
+    <a [routerLink]="['/users', 123]">
+      <spectre-avatar size="btn-md" initials="DB" [presence]="presence" [spectreContextMenu]="profileMenu" contextMenuAnchor="target"></spectre-avatar>
+    </a>
+
+    <ng-template #profileMenu>
+      <spectre-menu>
+        <spectre-menu-item>
+          <a [routerLink]="['/users', 123]" translate>user.profile</a>
+        </spectre-menu-item>
+        <spectre-menu-item *appIsAuthenticated="false">
+          <a class="c-hand" (click)="login()" translate>auth.login</a>
+        </spectre-menu-item>
+        <spectre-menu-item *appIsAuthenticated="true">
+          <a class="c-hand" (click)="logout()" translate>auth.logout</a>
+        </spectre-menu-item>
+        <spectre-menu-item *appIsAuthenticated="true">
+          <a class="c-hand" [spectreContextMenu]="presenceMenu" contextMenuEvent="click" contextMenuAnchor="target" translate>user.presence.title</a>
+          <ng-template #presenceMenu>
+            <spectre-menu>
+              <spectre-menu-item>
+                <a class="c-hand" (click)="presence = 'online'" [spectreBadge]="presence === 'online' ? '' : undefined" translate>user.presence.online</a>
+              </spectre-menu-item>
+              <spectre-menu-item>
+                <a class="c-hand" (click)="presence = 'busy'" [spectreBadge]="presence === 'busy' ? '' : undefined" translate>user.presence.busy</a>
+              </spectre-menu-item>
+            </spectre-menu>
+          </ng-template>
+        </spectre-menu-item>
+        <spectre-divider></spectre-divider>
+        <spectre-menu-item>
+          <a class="c-hand" (click)="fullscreenService.toggleFullscreen()" [spectreBadge]="fullscreenService.isInFullscreen ? '' : undefined" translate>profileMenu.toggleFullscreen</a>
+        </spectre-menu-item>
+        <spectre-menu-item>
+          <a class="c-hand" (click)="offcanvasService.forceToggleSidebar()" [spectreBadge]="offcanvasService.isSidebarVisible ? '' : undefined" translate>profileMenu.toggleSidebar</a>
+        </spectre-menu-item>
+        <spectre-menu-item>
+          <a class="c-hand" (click)="testApiProgress()">testApiProgress</a>
+        </spectre-menu-item>
+      </spectre-menu>
+    </ng-template>
+  </ng-template>
+  <ng-template spectreOffcanvasSidebar>
+    <spectre-nav-link href="google.com/?q=HelloWorld">Hello World!</spectre-nav-link>
+    <spectre-nav-list *appIsAuthenticated text="NavList">
+      <spectre-nav-link *appHasPermissions="['123']" [path]="['/test', 123]" [queryParams]="{ q: 'xd' }">NavLink</spectre-nav-link>
+    </spectre-nav-list>
+    <spectre-nav-link *appHasPermissions="[]" [path]="['/test', 123]" [queryParams]="{ q: 'xd' }">NavLink</spectre-nav-link>
+    <spectre-nav-list text="NavList (Index)">
+      <spectre-nav-link [path]="['/']">Index</spectre-nav-link>
+    </spectre-nav-list>
+    <spectre-nav-link [path]="['/', 'unpadded']">Unpadded</spectre-nav-link>
+    <spectre-nav-link [path]="['/', 'tablemanager-test']">TableManager</spectre-nav-link>
+    <spectre-nav-link [path]="['/', 'api-ref']">API-Ref</spectre-nav-link>
+  </ng-template>
+  <ng-template spectreOffcanvasContent>
+    <router-outlet></router-outlet>
+  </ng-template>
+  <ng-template spectreOffcanvasFooter>
+    ROFL
+  </ng-template>
+</spectre-offcanvas>
+
+<spectre-modal></spectre-modal>
+<spectre-toast></spectre-toast>
+<spectre-context-menu></spectre-context-menu>
+<!-- <spectre-window></spectre-window> -->

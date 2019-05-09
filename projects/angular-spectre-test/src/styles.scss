@@ -1,0 +1,26 @@
+// $primary-color: #bcd000;
+// button-color: #4d5400;
+// button-primary-color: #1d1d1d;
+// loading-color: #5755d9;
+
+// $primary-color: lighten(#5755d9, 10%);
+// $primary-color: #8A2BE2;
+// $secondary-color: rgba($primary-color, 0.15);
+// $dark-color: rgb(175, 175, 175);
+// $light-color: rgb(54, 54, 54);
+// $gray-color: lighten($dark-color, 0%);
+// $gray-color-dark: lighten($gray-color, 15%);
+// $border-color: rgb(175, 175, 175);
+// $bg-color: darken($light-color, 5%);
+// $bg-color-light: $light-color;
+// $body-font-color: lighten($dark-color, 25%);
+
+// $table-border-color: #aaa;
+// $table-border-separator-color: #666;
+// $table-th-back-color: lighten($light-color, 3%);
+// $table-th-fore-color: $body-font-color;
+// $table-td-back-color: lighten($light-color, 7%);
+// $table-td-fore-color: $body-font-color;
+// $table-td-alt-back-color: lighten($light-color, 5%);
+
+@import "../../angular-spectre/src/styles.scss";

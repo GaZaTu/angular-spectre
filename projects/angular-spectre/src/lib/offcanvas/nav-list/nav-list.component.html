@@ -1,0 +1,8 @@
+<div class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+  <a *ngIf="href" [href]="href">{{ text }}</a>
+  <a *ngIf="path" [routerLink]="path" [queryParams]="queryParams" [state]="state">{{ text }}</a>
+  <a *ngIf="!href && !path" style="pointer-events: none;">{{ text }}</a>
+  <div class="nav">
+    <ng-content></ng-content>
+  </div>
+</div>

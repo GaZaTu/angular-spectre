@@ -1,0 +1,5 @@
+<ng-template #expandColTemplate let-table="table" let-row="row">
+  <button *ngIf="table.canRowExpand(row)" spectreButton="link" (click)="table.toggleRowExpansion(row)">
+    <i [spectreIcon]="table.getRowMeta(row).expanded ? 'arrow-down' : 'arrow-right'"></i>
+  </button>
+</ng-template>

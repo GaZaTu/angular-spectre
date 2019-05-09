@@ -1,0 +1,25 @@
+<div *ngIf="tileIcon || iconBox || image" class="tile-icon">
+  <ng-container *ngIf="tileIcon" [ngTemplateOutlet]="tileIcon"></ng-container>
+
+  <div *ngIf="iconBox" class="tile-icon-box">
+    <ng-container [ngTemplateOutlet]="iconBox"></ng-container>
+  </div>
+
+  <figure *ngIf="image" class="avatar avatar-lg">
+    <img [src]="image">
+  </figure>
+</div>
+
+<div class="tile-content">
+  <div *ngIf="title" class="tile-title">
+    <ng-container [ngTemplateOutlet]="title"></ng-container>
+  </div>
+  <small *ngIf="subtitle" class="tile-subtitle text-gray">
+    <ng-container [ngTemplateOutlet]="subtitle"></ng-container>
+  </small>
+  <ng-container *ngIf="content" [ngTemplateOutlet]="content"></ng-container>
+</div>
+
+<div *ngIf="action" class="tile-action">
+  <ng-container [ngTemplateOutlet]="action"></ng-container>
+</div>

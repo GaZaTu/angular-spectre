@@ -1,0 +1,6 @@
+<input #input [attr.id]="id" [type]="type" [ngClass]="inputClass" [value]="value" (keyup)="onChange($event.target.value)" [readOnly]="readOnly" [disabled]="disabled" [required]="required" [attr.pattern]="pattern" [attr.placeholder]="placeholder" [attr.list]="options ? datalistId : null">
+<i *ngIf="pending" class="form-icon loading"></i>
+<i *ngIf="icon && !pending" class="form-icon icon icon-{{ icon }} {{ iconClick.observers.length && 'c-hand' }}" (click)="iconClick.emit($event)"></i>
+<datalist *ngIf="options" [id]="datalistId">
+  <option *ngFor="let option of options" [value]="option"></option>
+</datalist>

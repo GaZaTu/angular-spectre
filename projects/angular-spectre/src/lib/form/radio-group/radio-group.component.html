@@ -1,0 +1,3 @@
+<spectre-checkbox *ngFor="let option of options?.toArray(); trackBy: trackOptionFn" type="radio" [ngModel]="isOptionChecked(option)" (ngModelChange)="onOptionChecked(option, $event)" [error]="error" [disabled]="disabled">
+  {{ option.text }}
+</spectre-checkbox>

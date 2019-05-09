@@ -1,0 +1,8 @@
+:host.has-required {
+  label:after {
+    position: relative;
+    top: -6px;
+    content: "*";
+    color: rgba(255, 0, 0, 0.6);
+  }
+}

@@ -1,0 +1,40 @@
+<div class="App off-canvas off-canvas-sidebar-show">
+  <header class="navbar app-navbar">
+    <section class="navbar-section pad-left">
+      <a class="off-canvas-toggle btn btn-link btn-action" (click)="service.toggleSidebar()">
+        <i class="icon icon-menu"></i>
+      </a>
+
+      <a href="/" class="navbar-brand show-lg app-brand">
+        <ng-container [ngTemplateOutlet]="brand"></ng-container>
+      </a>
+    </section>
+
+    <section class="navbar-section pad-right">
+      <ng-container [ngTemplateOutlet]="navbar" [ngTemplateOutletContext]="{ offcanvasService: service }"></ng-container>
+    </section>
+  </header>
+
+  <div class="app-sidebar off-canvas-sidebar {{ service.sidebarVisibilityClassName }}">
+    <div class="app-brand">
+      <a href="/">
+        <ng-container [ngTemplateOutlet]="brand"></ng-container>
+      </a>
+    </div>
+
+    <div class="app-nav">
+      <div class="nav">
+        <ng-container [ngTemplateOutlet]="sidebar" [ngTemplateOutletContext]="{ offcanvasService: service }"></ng-container>
+      </div>
+    </div>
+  </div>
+  <a class="off-canvas-overlay" (click)="service.toggleSidebar()"></a>
+  <div class="app-content off-canvas-content {{ service.isContentPadded ? 'unpadded' : '' }}">
+    <div [style.padding-bottom]="footer ? '2rem' : undefined">
+      <ng-container [ngTemplateOutlet]="content" [ngTemplateOutletContext]="{ offcanvasService: service }"></ng-container>
+    </div>
+    <footer *ngIf="footer" style="position: absolute; bottom: 1rem;">
+      <ng-container [ngTemplateOutlet]="footer" [ngTemplateOutletContext]="{ offcanvasService: service }"></ng-container>
+    </footer>
+  </div>
+</div>

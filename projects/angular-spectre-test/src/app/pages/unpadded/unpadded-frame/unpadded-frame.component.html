@@ -1,0 +1,39 @@
+<spectre-card [withoutPadding]="true">
+  <ng-template spectreCardBody>
+    <spectre-table [data]="tableData" trackByKey="id" [striped]="true">
+      <spectre-table-column preset="expandCol">
+      </spectre-table-column>
+      <spectre-table-column prop="firstName" name="First Name" flex="10" filterKind="input-select">
+      </spectre-table-column>
+      <spectre-table-column prop="lastName" name="Last Name" flex="10" filterKind="multi-select">
+      </spectre-table-column>
+      <spectre-table-column prop="date" name="Date" flex="5" preset="date">
+      </spectre-table-column>
+      <spectre-table-column prop="age" name="Age" flex="5">
+      </spectre-table-column>
+      <spectre-table-column prop="active" name="Active" flex="5" filterKind="select" [lookupData]="[{ key: 'Ja', value: true }, { key: 'Nein', value: false }]">
+      </spectre-table-column>
+
+      <ng-template spectreTableRowDetail let-row>
+        <spectre-table [data]="[{ firstName: 'fname1', lastName: 'lname1', age: 10, active: true }, { firstName: 'fname2', lastName: 'lname2', age: 20, active: false }, { firstName: 'fname3', lastName: 'lname3', age: 20, active: true }]" trackByKey="firstName" [nested]="true" style="margin-left: 2rem;">
+          <spectre-table-column prop="firstName" name="First Name" [flex]="2">
+          </spectre-table-column>
+          <spectre-table-column prop="lastName" name="Last Name" [flex]="2">
+          </spectre-table-column>
+          <spectre-table-column prop="age" name="Age" [flex]="1">
+          </spectre-table-column>
+          <spectre-table-column prop="active" name="Active" [flex]="1">
+          </spectre-table-column>
+        </spectre-table>
+      </ng-template>
+
+      <ng-template spectreTableFooter>
+        <spectre-button-group>
+          <button spectreButton>
+            <i spectreIcon="plus"></i>
+          </button>
+        </spectre-button-group>
+      </ng-template>
+    </spectre-table>
+  </ng-template>
+</spectre-card>

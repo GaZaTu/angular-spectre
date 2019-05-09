@@ -1,0 +1,8 @@
+<input [type]="getExclusive() ? 'radio' : 'checkbox'" [attr.id]="id" [attr.name]="getName()" [attr.checked]="attrChecked" [checked]="checked" (change)="onChange($event)" hidden>
+<label class="accordion-header c-hand" [attr.for]="id">
+  <i *ngIf="getShowIcon()" class="icon icon-arrow-right mr-1"></i>
+  <ng-container [ngTemplateOutlet]="headerTemplate"></ng-container>
+</label>
+<div class="accordion-body">
+  <ng-container *ngIf="getAlwaysRender() || checked || attrChecked" [ngTemplateOutlet]="bodyTemplate"></ng-container>
+</div>

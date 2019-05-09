@@ -1,0 +1,21 @@
+<div *ngIf="header || title || subtitle" class="panel-header">
+  <ng-container *ngIf="header" [ngTemplateOutlet]="header"></ng-container>
+  <div *ngIf="title" class="panel-title">
+    <ng-container [ngTemplateOutlet]="title"></ng-container>
+  </div>
+  <div *ngIf="subtitle" class="panel-subtitle">
+    <ng-container [ngTemplateOutlet]="subtitle"></ng-container>
+  </div>
+</div>
+
+<div *ngIf="nav" class="panel-nav">
+  <ng-container [ngTemplateOutlet]="nav"></ng-container>
+</div>
+
+<div *ngIf="body" class="panel-body">
+  <ng-container [ngTemplateOutlet]="body"></ng-container>
+</div>
+
+<div *ngIf="footer" class="panel-footer">
+  <ng-container [ngTemplateOutlet]="footer"></ng-container>
+</div>

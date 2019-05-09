@@ -1,0 +1,13 @@
+<ul class="pagination">
+  <ng-container *ngFor="let pageItem of pageItems">
+    <li class="page-item {{ pageItem.active ? 'active' : '' }} {{ pageItem.disabled ? 'disabled' : '' }}">
+      <a *ngIf="pageItem.navigationPage !== undefined" class="c-hand" (click)="navigate(pageItem.navigationPage)">
+        {{ pageItem.text }}
+      </a>
+
+      <span *ngIf="pageItem.navigationPage === undefined">
+        {{ pageItem.text }}
+      </span>
+    </li>
+  </ng-container>
+</ul>

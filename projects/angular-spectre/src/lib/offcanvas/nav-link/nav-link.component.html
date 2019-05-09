@@ -1,0 +1,12 @@
+<div class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+  <a *ngIf="href" [href]="href">
+    <ng-container [ngTemplateOutlet]="content"></ng-container>
+  </a>
+  <a *ngIf="path" [routerLink]="path" [queryParams]="queryParams" [state]="state">
+    <ng-container [ngTemplateOutlet]="content"></ng-container>
+  </a>
+</div>
+
+<ng-template #content>
+  <ng-content></ng-content>
+</ng-template>

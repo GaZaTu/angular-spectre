@@ -1,0 +1,17 @@
+<ul class="tab {{ stretch ? 'tab-block' : '' }}">
+  <li *ngFor="let tab of tabs?.toArray(); trackBy: trackTabFn" class="tab-item {{ tabIsActive(tab) ? 'active' : '' }}" [attr.id]="tab.id">
+    <a class="c-hand {{ tabHasBadge(tab) ? 'badge' : '' }}" style="white-space: nowrap;" [attr.data-badge]="tab.badge" (click)="activeTabKeyChange.emit(tab.key)">
+      <span>{{ tab.name }}</span>
+      <span *ngIf="tab.closable" class="btn btn-clear" (click)="closeTab(tab)"></span>
+    </a>
+  </li>
+  <li *ngIf="tabAction" class="tab-item tab-action">
+    <ng-container [ngTemplateOutlet]="tabAction"></ng-container>
+  </li>
+</ul>
+
+<div *ngIf="!navOnly" class="tab-pages">
+  <div *ngFor="let tab of tabs?.toArray(); trackBy: trackTabFn" [class]="tab.hostClass">
+    <ng-container [ngTemplateOutlet]="tab.content"></ng-container>
+  </div>
+</div>
